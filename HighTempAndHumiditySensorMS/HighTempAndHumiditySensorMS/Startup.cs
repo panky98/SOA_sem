@@ -1,3 +1,4 @@
+using HighTempAndHumiditySensorMS.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,11 @@ namespace HighTempAndHumiditySensorMS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HighTempAndHumiditySensorMS", Version = "v1" });
             });
+
+            //singleton, then used as HostedService
+            //after that it can be used in Controller with DI
+            services.AddSingleton<SensorService>();
+            services.AddHostedService<SensorService>(provider=>provider.GetService<SensorService>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
