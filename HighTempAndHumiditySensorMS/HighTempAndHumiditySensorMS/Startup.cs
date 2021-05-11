@@ -34,6 +34,8 @@ namespace HighTempAndHumiditySensorMS
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HighTempAndHumiditySensorMS", Version = "v1" });
             });
 
+
+            services.AddHttpClient();
             //singleton, then used as HostedService
             //after that it can be used in Controller with DI
             services.AddSingleton<SensorService>();

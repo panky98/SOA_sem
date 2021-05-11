@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,12 +20,21 @@ namespace HighTempAndHumiditySensorMS.Services
         private float threshold;
         private bool lightThreshold;
         private bool motionThreshold;
+        private readonly IHttpClientFactory _httpFactory;
+        private HttpClient client;
 
-        public SensorService()
+
+        public bool MotionThreshold { get => motionThreshold; set => motionThreshold = value; }
+        public bool LightThreshold { get => lightThreshold; set => lightThreshold = value; }
+        public float Threshold { get => threshold; set => threshold = value; }
+
+        public SensorService(IHttpClientFactory _httpFactory)
         {
-            threshold = 0.54f;//10% initial threshold
-            lightThreshold = true;
-            motionThreshold = true;
+            this._httpFactory = _httpFactory;
+            this.client = _httpFactory.CreateClient();
+            Threshold = 0.54f;//10% initial threshold
+            LightThreshold = true;
+            MotionThreshold = true;
             csvFile = new StreamReader("..\\iot_telemetry_data.csv");
             csvFile.ReadLine();
             string line;
@@ -56,6 +68,13 @@ namespace HighTempAndHumiditySensorMS.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            Task.Run(Routine, cancellationToken);
+            return Task.CompletedTask;
+        }
+
+
+        public Task Routine()
+        {
             string line;
             IList<string> entryList = null;
             while ((line = csvFile.ReadLine()) != null)
@@ -80,13 +99,14 @@ namespace HighTempAndHumiditySensorMS.Services
                 };
 
                 double diff = newValue.MS - lastValue.MS;
-                Thread.Sleep(Convert.ToInt32(diff));
-                
+                Task.Delay(Convert.ToInt32(diff * 1000)).Wait();
+
                 lastValue = newValue;
-                if(ChangedForThresHold(newValue,entryList))
+                if (ChangedForThresHold(newValue, entryList))
                 {
                     lastValueReferent = newValue;
-                    //pozvati DataMS kao REST CLIENT
+                    var sendingItem = new StringContent(JsonSerializer.Serialize(newValue), Encoding.UTF8, "application/json");
+                    this.client.PostAsync("http://localhost:3000/addRow", sendingItem);
                 }
             }
 
@@ -102,9 +122,9 @@ namespace HighTempAndHumiditySensorMS.Services
         {
             //boolean podaci da li su se promenili
             //i da li je ukljucen monitoring njihov
-            if (lightThreshold && val.Light != lastValueReferent.Light)
+            if (LightThreshold && val.Light != lastValueReferent.Light)
                 return true;
-            if (motionThreshold && val.Motion != lastValueReferent.Motion)
+            if (MotionThreshold && val.Motion != lastValueReferent.Motion)
                 return true;
 
             return ChangedForThresHoldDoubles(entries);
@@ -129,7 +149,7 @@ namespace HighTempAndHumiditySensorMS.Services
                 double value = Convert.ToDouble(entries[i]);
                 double percentage = 100 * value / refValues[i];
                 percentage = Math.Abs(percentage - 100);
-                if (percentage > threshold)
+                if (percentage > Threshold)
                     return true;
             }
 
