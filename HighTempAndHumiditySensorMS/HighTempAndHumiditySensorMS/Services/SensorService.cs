@@ -58,11 +58,12 @@ namespace HighTempAndHumiditySensorMS.Services
                 Motion = Convert.ToBoolean(entryList[6]),
                 Smoke = Convert.ToDouble(entryList[7]),
                 Temp = Convert.ToDouble(entryList[8]),
-                MS = Convert.ToDouble(entryList[0])
+                MS = Convert.ToDouble(entryList[0]),
+                Device= "1c:bf:ce:15:ec:4d"
             };
 
             lastValue = new Entry(lastValueReferent.Co, lastValueReferent.Humidity, lastValueReferent.Light, lastValueReferent.Lpg, 
-                                    lastValueReferent.Motion, lastValueReferent.Smoke, lastValueReferent.Temp, lastValueReferent.MS);
+                                    lastValueReferent.Motion, lastValueReferent.Smoke, lastValueReferent.Temp, lastValueReferent.MS,lastValueReferent.Device);
 
         }
 
@@ -95,7 +96,8 @@ namespace HighTempAndHumiditySensorMS.Services
                     Motion = Convert.ToBoolean(entryList[6]),
                     Smoke = Convert.ToDouble(entryList[7]),
                     Temp = Convert.ToDouble(entryList[8]),
-                    MS = Convert.ToDouble(entryList[0])
+                    MS = Convert.ToDouble(entryList[0]),
+                    Device= "1c:bf:ce:15:ec:4d"
                 };
 
                 double diff = newValue.MS - lastValue.MS;

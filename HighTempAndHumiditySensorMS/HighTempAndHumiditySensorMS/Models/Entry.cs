@@ -15,6 +15,7 @@ namespace HighTempAndHumiditySensorMS.Models
         private double _smoke;
         private double _temp;
         private double _mS;
+        private string _device;
 
         public double Co { get => _co; set => _co = value; }
         public double Humidity { get => _humidity; set => _humidity = value; }
@@ -24,13 +25,14 @@ namespace HighTempAndHumiditySensorMS.Models
         public double Smoke { get => _smoke; set => _smoke = value; }
         public double Temp { get => _temp; set => _temp = value; }
         public double MS { get => _mS; set => _mS = value; }
+        public string Device { get => _device; set => _device = value; }
 
         public Entry()
         {
             
         }
 
-        public Entry(double co, double humidity, bool light, double lpg, bool motion, double smoke, double temp, double mS)
+        public Entry(double co, double humidity, bool light, double lpg, bool motion, double smoke, double temp, double mS, string device)
         {
             Co = co;
             Humidity = humidity;
@@ -40,6 +42,7 @@ namespace HighTempAndHumiditySensorMS.Models
             Smoke = smoke;
             Temp = temp;
             MS = mS;
+            Device = device;
         }
     }
 }
