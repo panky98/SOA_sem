@@ -35,7 +35,7 @@ namespace HighTempAndHumiditySensorMS.Services
             Threshold = 0.54f;//10% initial threshold
             LightThreshold = true;
             MotionThreshold = true;
-            csvFile = new StreamReader("..\\iot_telemetry_data.csv");
+            csvFile = new StreamReader("iot_telemetry_data.csv");
             csvFile.ReadLine();
             string line;
             IList<string> entryList = null;
@@ -106,7 +106,7 @@ namespace HighTempAndHumiditySensorMS.Services
                 {
                     lastValueReferent = newValue;
                     var sendingItem = new StringContent(JsonSerializer.Serialize(newValue), Encoding.UTF8, "application/json");
-                    this.client.PostAsync("http://localhost:3000/addRow", sendingItem);
+                    this.client.PostAsync("http://192.168.0.15:3000/addRow", sendingItem);
                 }
             }
 
