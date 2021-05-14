@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
-using StableConditionsSensorMS.Models;
+﻿using HighTempAndHumiditySensorMS.Models;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace StableConditionsSensorMS.Services
+namespace HighTempAndHumiditySensorMS.Services
 {
     public class SensorService : IHostedService
     {
@@ -22,30 +22,14 @@ namespace StableConditionsSensorMS.Services
         private bool motionThreshold;
         private readonly IHttpClientFactory _httpFactory;
         private HttpClient client;
-        
-        private string currentSensor;
-        private int currSensorId;
-        private IList<Sensor> sensors;
-
 
 
         public bool MotionThreshold { get => motionThreshold; set => motionThreshold = value; }
         public bool LightThreshold { get => lightThreshold; set => lightThreshold = value; }
         public float Threshold { get => threshold; set => threshold = value; }
-        public string CurrentSensor { get => currentSensor; set => currentSensor = value; }
-        public int CurrSensorId { get => currSensorId; set => currSensorId = value; }
-        public IList<Sensor> Sensors { get => sensors; set => sensors = value; }
 
         public SensorService(IHttpClientFactory _httpFactory)
         {
-            this.CurrentSensor = "00:0f:00:70:91:0a";
-            this.CurrSensorId = 0;
-            this.Sensors = new List<Sensor>();
-
-            this.Sensors.Add(new Sensor("00:0f:00:70:91:0a", "stable conditions, cooler and more humid"));
-            this.Sensors.Add(new Sensor("b8:27:eb:bf:9d:51", "stable conditions, warmer and dryer"));
-
-
             this._httpFactory = _httpFactory;
             this.client = _httpFactory.CreateClient();
             Threshold = 0.54f;//10% initial threshold
@@ -55,11 +39,11 @@ namespace StableConditionsSensorMS.Services
             csvFile.ReadLine();
             string line;
             IList<string> entryList = null;
-            while ((line = csvFile.ReadLine()) != null)
+            while ((line=csvFile.ReadLine())!=null)
             {
-                line = line.Replace("\"", "");
+                line= line.Replace("\"", "");
                 entryList = line.Split(",");
-                if (entryList[1].Equals(this.currentSensor))
+                if(entryList[1].Equals("1c:bf:ce:15:ec:4d"))
                 {
                     break;
                 }
@@ -75,11 +59,11 @@ namespace StableConditionsSensorMS.Services
                 Smoke = Convert.ToDouble(entryList[7]),
                 Temp = Convert.ToDouble(entryList[8]),
                 MS = Convert.ToDouble(entryList[0]),
-                Sensor=this.currentSensor
+                Sensor = "1c:bf:ce:15:ec:4d"
             };
 
-            lastValue = new Entry(lastValueReferent.Co, lastValueReferent.Humidity, lastValueReferent.Light, lastValueReferent.Lpg,
-                                    lastValueReferent.Motion, lastValueReferent.Smoke, lastValueReferent.Temp, lastValueReferent.MS,this.currentSensor);
+            lastValue = new Entry(lastValueReferent.Co, lastValueReferent.Humidity, lastValueReferent.Light, lastValueReferent.Lpg, 
+                                    lastValueReferent.Motion, lastValueReferent.Smoke, lastValueReferent.Temp, lastValueReferent.MS,lastValueReferent.Sensor);
 
         }
 
@@ -98,7 +82,7 @@ namespace StableConditionsSensorMS.Services
             {
                 line = line.Replace("\"", "");
                 entryList = line.Split(",");
-                if (!entryList[1].Equals(this.currentSensor))
+                if (!entryList[1].Equals("1c:bf:ce:15:ec:4d"))
                 {
                     continue;
                 }
@@ -113,7 +97,7 @@ namespace StableConditionsSensorMS.Services
                     Smoke = Convert.ToDouble(entryList[7]),
                     Temp = Convert.ToDouble(entryList[8]),
                     MS = Convert.ToDouble(entryList[0]),
-                    Sensor=this.currentSensor
+                    Sensor = "1c:bf:ce:15:ec:4d"
                 };
 
                 double diff = newValue.MS - lastValue.MS;
@@ -124,7 +108,7 @@ namespace StableConditionsSensorMS.Services
                 {
                     lastValueReferent = newValue;
                     var sendingItem = new StringContent(JsonSerializer.Serialize(newValue), Encoding.UTF8, "application/json");
-                    this.client.PostAsync("https://localhost:44335/DataMicroservice/addRow", sendingItem);
+                    this.client.PostAsync("http://data-api:51803/DataMicroservice/addRow", sendingItem);
                 }
             }
 
@@ -136,7 +120,7 @@ namespace StableConditionsSensorMS.Services
             csvFile.Close();
             return Task.CompletedTask;
         }
-        public bool ChangedForThresHold(Entry val, IList<string> entries)
+        public bool ChangedForThresHold(Entry val,IList<string> entries)
         {
             //boolean podaci da li su se promenili
             //i da li je ukljucen monitoring njihov
@@ -159,7 +143,7 @@ namespace StableConditionsSensorMS.Services
 
 
 
-            for (int i = 2; i < entries.Count; i++)
+            for (int i=2;i<entries.Count;i++)
             {
                 if (i == 4 || i == 6)
                     continue;
