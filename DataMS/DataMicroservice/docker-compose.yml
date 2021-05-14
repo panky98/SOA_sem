@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  datamicroservice:
+    image: ${DOCKER_REGISTRY-}datamicroservice
+    build:
+      context: .
+      dockerfile: DataMicroservice/Dockerfile
