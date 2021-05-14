@@ -3,9 +3,9 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>e92c29ee-2ca4-4cb2-abcd-ce58c9487e62</ProjectGuid>
+    <ProjectGuid>7237dabb-e33a-4203-b383-e91e55b2ad39</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>datamicroservice</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

@@ -3,38 +3,35 @@ version: '3.4'
 services:
   datamicroservice:
     image: ${DOCKER_REGISTRY-}datamicroservice
-    environment:
-      - DataUrl=http://datamicroservice
-      - RedisUrl=http://redis-api
     ports:
-      - "51803:80"
-    depends_on:
-      - redis-api
+        - "51800:80"
+    
     build:
       context: .
       dockerfile: DataMicroservice/Dockerfile
 
-      
   hightempandhumiditysensorms:
     image: ${DOCKER_REGISTRY-}hightempandhumiditysensorms
     ports:
-      - "51804:80"
+        - "51804:80"
+    links:
+        - datamicroservice
     depends_on:
-      - datamicroservice
+        - datamicroservice
     build:
       context: .
       dockerfile: HighTempAndHumiditySensorMS/Dockerfile
-      
+
+
   stableconditionssensorms:
     image: ${DOCKER_REGISTRY-}stableconditionssensorms
     ports:
-      - "51805:80"
+        - "51805:80"
+    links:
+        - datamicroservice
     depends_on:
-      - datamicroservice
+        - datamicroservice
     build:
       context: .
       dockerfile: StableConditionsSensorMS/Dockerfile
 
-  redis-api:
-        image: redis
-      

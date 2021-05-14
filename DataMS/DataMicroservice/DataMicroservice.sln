@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataMicroservice", "DataMicroservice\DataMicroservice.csproj", "{E5D42C38-5DAE-4B6E-9F4A-A88D74F250D8}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E92C29EE-2CA4-4CB2-ABCD-CE58C9487E62}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HighTempAndHumiditySensorMS", "HighTempAndHumiditySensorMS\HighTempAndHumiditySensorMS.csproj", "{AAE9DF16-CE85-4168-B3AF-3F7D4798990A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StableConditionsSensorMS", "StableConditionsSensorMS\StableConditionsSensorMS.csproj", "{5A3857A0-D543-4358-9EA8-640B6D9E239D}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7237DABB-E33A-4203-B383-E91E55B2AD39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{E5D42C38-5DAE-4B6E-9F4A-A88D74F250D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5D42C38-5DAE-4B6E-9F4A-A88D74F250D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5D42C38-5DAE-4B6E-9F4A-A88D74F250D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E92C29EE-2CA4-4CB2-ABCD-CE58C9487E62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E92C29EE-2CA4-4CB2-ABCD-CE58C9487E62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E92C29EE-2CA4-4CB2-ABCD-CE58C9487E62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E92C29EE-2CA4-4CB2-ABCD-CE58C9487E62}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AAE9DF16-CE85-4168-B3AF-3F7D4798990A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AAE9DF16-CE85-4168-B3AF-3F7D4798990A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAE9DF16-CE85-4168-B3AF-3F7D4798990A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{5A3857A0-D543-4358-9EA8-640B6D9E239D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A3857A0-D543-4358-9EA8-640B6D9E239D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A3857A0-D543-4358-9EA8-640B6D9E239D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7237DABB-E33A-4203-B383-E91E55B2AD39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7237DABB-E33A-4203-B383-E91E55B2AD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7237DABB-E33A-4203-B383-E91E55B2AD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7237DABB-E33A-4203-B383-E91E55B2AD39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

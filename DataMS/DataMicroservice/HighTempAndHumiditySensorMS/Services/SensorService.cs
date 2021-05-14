@@ -108,7 +108,7 @@ namespace HighTempAndHumiditySensorMS.Services
                 {
                     lastValueReferent = newValue;
                     var sendingItem = new StringContent(JsonSerializer.Serialize(newValue), Encoding.UTF8, "application/json");
-                    this.client.PostAsync("http://data-api:51803/DataMicroservice/addRow", sendingItem);
+                    this.client.PostAsync("http://datamicroservice/DataMicroservice/addRow", sendingItem);
                 }
             }
 
