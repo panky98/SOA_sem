@@ -3,15 +3,19 @@ version: '3.4'
 services:
   datamicroservice:
     image: ${DOCKER_REGISTRY-}datamicroservice
+    container_name: datamicroservice
     ports:
         - "51800:80"
-    
+    expose:
+        - "51800"
+        - "80"
     build:
       context: .
       dockerfile: DataMicroservice/Dockerfile
 
   hightempandhumiditysensorms:
     image: ${DOCKER_REGISTRY-}hightempandhumiditysensorms
+    container_name: hightempandhumiditysensorms
     ports:
         - "51804:80"
     links:
@@ -25,6 +29,7 @@ services:
 
   stableconditionssensorms:
     image: ${DOCKER_REGISTRY-}stableconditionssensorms
+    container_name: stableconditionssensorms
     ports:
         - "51805:80"
     links:

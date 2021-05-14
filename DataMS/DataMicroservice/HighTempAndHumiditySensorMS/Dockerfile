@@ -20,3 +20,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "HighTempAndHumiditySensorMS.dll"]
+
+WORKDIR /app
+COPY iot_telemetry_data.csv .

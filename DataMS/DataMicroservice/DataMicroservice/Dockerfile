@@ -19,4 +19,5 @@ RUN dotnet publish "DataMicroservice.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+EXPOSE 80/tcp
 ENTRYPOINT ["dotnet", "DataMicroservice.dll"]
