@@ -9,7 +9,7 @@ namespace DataMicroservice.Services
 {
     public class DeviceService
     {
-        readonly RedisClient redis = new RedisClient("localhost");
+        readonly RedisClient redis = new RedisClient("192.168.0.104:6379");
         public IList<Entry> GetEntries(string sensorStandardMac)
         {
             long numberOfInputs = long.Parse(redis.GetValueFromHash("devices", sensorStandardMac));

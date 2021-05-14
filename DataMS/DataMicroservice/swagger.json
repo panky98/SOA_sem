@@ -1,0 +1,172 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "DataMicroservice",
+    "version": "v1"
+  },
+  "paths": {
+    "/DataMicroservice/addRow": {
+      "post": {
+        "tags": [
+          "DataMicroservice"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Entry"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Entry"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Entry"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Entry"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Entry"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Entry"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/DataMicroservice/getAllSensorData/{sensorStandardMac}": {
+      "get": {
+        "tags": [
+          "DataMicroservice"
+        ],
+        "parameters": [
+          {
+            "name": "sensorStandardMac",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/DataMicroservice/getRangeSensorData/{sensorStandardMac}/{attributeName}/{lowerBound}/{upperBound}": {
+      "get": {
+        "tags": [
+          "DataMicroservice"
+        ],
+        "parameters": [
+          {
+            "name": "sensorStandardMac",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "attributeName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "lowerBound",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "upperBound",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Entry": {
+        "type": "object",
+        "properties": {
+          "co": {
+            "type": "number",
+            "format": "double"
+          },
+          "humidity": {
+            "type": "number",
+            "format": "double"
+          },
+          "light": {
+            "type": "boolean"
+          },
+          "lpg": {
+            "type": "number",
+            "format": "double"
+          },
+          "motion": {
+            "type": "boolean"
+          },
+          "smoke": {
+            "type": "number",
+            "format": "double"
+          },
+          "temp": {
+            "type": "number",
+            "format": "double"
+          },
+          "ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "sensor": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
