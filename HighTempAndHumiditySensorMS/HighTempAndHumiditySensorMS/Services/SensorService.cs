@@ -59,11 +59,11 @@ namespace HighTempAndHumiditySensorMS.Services
                 Smoke = Convert.ToDouble(entryList[7]),
                 Temp = Convert.ToDouble(entryList[8]),
                 MS = Convert.ToDouble(entryList[0]),
-                Device= "1c:bf:ce:15:ec:4d"
+                Sensor = "1c:bf:ce:15:ec:4d"
             };
 
             lastValue = new Entry(lastValueReferent.Co, lastValueReferent.Humidity, lastValueReferent.Light, lastValueReferent.Lpg, 
-                                    lastValueReferent.Motion, lastValueReferent.Smoke, lastValueReferent.Temp, lastValueReferent.MS,lastValueReferent.Device);
+                                    lastValueReferent.Motion, lastValueReferent.Smoke, lastValueReferent.Temp, lastValueReferent.MS,lastValueReferent.Sensor);
 
         }
 
@@ -97,7 +97,7 @@ namespace HighTempAndHumiditySensorMS.Services
                     Smoke = Convert.ToDouble(entryList[7]),
                     Temp = Convert.ToDouble(entryList[8]),
                     MS = Convert.ToDouble(entryList[0]),
-                    Device= "1c:bf:ce:15:ec:4d"
+                    Sensor = "1c:bf:ce:15:ec:4d"
                 };
 
                 double diff = newValue.MS - lastValue.MS;
@@ -108,7 +108,7 @@ namespace HighTempAndHumiditySensorMS.Services
                 {
                     lastValueReferent = newValue;
                     var sendingItem = new StringContent(JsonSerializer.Serialize(newValue), Encoding.UTF8, "application/json");
-                    this.client.PostAsync("http://192.168.0.15:3000/addRow", sendingItem);
+                    this.client.PostAsync("https://localhost:44335/DataMicroservice/addRow", sendingItem);
                 }
             }
 
