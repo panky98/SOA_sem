@@ -124,7 +124,7 @@ namespace StableConditionsSensorMS.Services
                 {
                     lastValueReferent = newValue;
                     var sendingItem = new StringContent(JsonSerializer.Serialize(newValue), Encoding.UTF8, "application/json");
-                    this.client.PostAsync("http://192.168.0.15:3000/addRow", sendingItem);
+                    this.client.PostAsync("https://localhost:44335/DataMicroservice/addRow", sendingItem);
                 }
             }
 
