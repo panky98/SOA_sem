@@ -17,16 +17,11 @@ namespace DataMicroservice.Controllers
     [Route("[controller]")]
     public class DataMicroserviceController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
-        private readonly ILogger<DataMicroserviceController> _logger;
         private readonly DeviceService deviceService;
-        public DataMicroserviceController(ILogger<DataMicroserviceController> logger)
+        public DataMicroserviceController(DeviceService deviceService)
         {
-            _logger = logger;
+            this.deviceService = deviceService;
         }
 
         [HttpPost]
@@ -41,6 +36,15 @@ namespace DataMicroservice.Controllers
         public async Task<IActionResult> getAllSensorData([FromRoute(Name ="sensorStandardMac")] string sensorStandardMac)
         {
             IList<Entry> entries = deviceService.GetEntries(sensorStandardMac);  
+            return new JsonResult(entries);
+        }
+        [HttpGet]
+        [Route("getRangeSensorData/{sensorStandardMac}/{attributeName}/{lowerBound}/{upperBound}")]
+        public async Task<IActionResult> GetRangeSensorData([FromRoute(Name = "sensorStandardMac")] string sensorStandardMac,
+            [FromRoute(Name = "attributeName")] string attributeName,
+            [FromRoute(Name = "lowerBound")] double lowerBound, [FromRoute(Name = "upperBound")] double upperBound)
+        {
+            IList<Entry> entries = deviceService.GetRangeEntries(sensorStandardMac,attributeName,lowerBound,upperBound);
             return new JsonResult(entries);
         }
     }
