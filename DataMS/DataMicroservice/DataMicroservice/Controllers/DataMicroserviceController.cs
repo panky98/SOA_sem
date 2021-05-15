@@ -47,13 +47,6 @@ namespace DataMicroservice.Controllers
             IList<Entry> entries = deviceService.GetRangeEntries(sensorStandardMac,attributeName,lowerBound,upperBound);
             return new JsonResult(entries);
         }
-        [HttpGet]
-        [Route("test")]
-        public async Task<IActionResult> Test()
-        {
-            
-            return new JsonResult("testing");
-        }
 
     }
 }

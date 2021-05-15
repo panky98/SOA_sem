@@ -124,7 +124,6 @@ namespace StableConditionsSensorMS.Services
                 {
                     lastValueReferent = newValue;
                     var sendingItem = new StringContent(JsonSerializer.Serialize(newValue), Encoding.UTF8, "application/json");
-                    //string resultcina = this.client.GetAsync("http://datamicroservice:80/DataMicroservice/test").Result.ToString();
                     this.client.PostAsync("http://datamicroservice:80/DataMicroservice/addRow", sendingItem);
                 }
             }

@@ -11,6 +11,8 @@ services:
         - 80
     depends_on:
         - redis-api
+    links:
+        - redis-api 
     build:
       context: .
       dockerfile: DataMicroservice/Dockerfile

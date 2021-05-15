@@ -17,7 +17,7 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
       - "51804:80"
-      - "443"
+      - "51603:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -28,7 +28,7 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
       - "51805:80"
-      - "443"
+      - "51602:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
