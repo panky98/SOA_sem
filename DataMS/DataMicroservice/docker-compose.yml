@@ -5,10 +5,12 @@ services:
     image: ${DOCKER_REGISTRY-}datamicroservice
     container_name: datamicroservice
     ports:
-        - "51800:80"
+        - 51800:80
     expose:
-        - "51800"
-        - "80"
+        - 51800
+        - 80
+    depends_on:
+        - redis-api
     build:
       context: .
       dockerfile: DataMicroservice/Dockerfile
@@ -17,7 +19,7 @@ services:
     image: ${DOCKER_REGISTRY-}hightempandhumiditysensorms
     container_name: hightempandhumiditysensorms
     ports:
-        - "51804:80"
+        - 51804:80
     links:
         - datamicroservice
     depends_on:
@@ -31,7 +33,7 @@ services:
     image: ${DOCKER_REGISTRY-}stableconditionssensorms
     container_name: stableconditionssensorms
     ports:
-        - "51805:80"
+        - 51805:80
     links:
         - datamicroservice
     depends_on:
@@ -40,3 +42,5 @@ services:
       context: .
       dockerfile: StableConditionsSensorMS/Dockerfile
 
+  redis-api:
+    image: redis:latest
