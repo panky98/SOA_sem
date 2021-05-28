@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}datamicroservice
     container_name: datamicroservice
     ports:
-        - 51800:80
+        - 52800:80
     expose:
         - 51800
         - 80
@@ -21,7 +21,7 @@ services:
     image: ${DOCKER_REGISTRY-}hightempandhumiditysensorms
     container_name: hightempandhumiditysensorms
     ports:
-        - 51804:80
+        - 52804:80
     links:
         - datamicroservice
     depends_on:
@@ -35,7 +35,7 @@ services:
     image: ${DOCKER_REGISTRY-}stableconditionssensorms
     container_name: stableconditionssensorms
     ports:
-        - 51805:80
+        - 52805:80
     links:
         - datamicroservice
     depends_on:
@@ -46,3 +46,33 @@ services:
 
   redis-api:
     image: redis:latest
+
+  redis-api-analytics:
+    image: redis:latest
+
+  analyticsmicroservice:
+    image: ${DOCKER_REGISTRY-}analyticsmicroservice
+    ports:
+        - 52806:80
+    links:
+        - datamicroservice
+        - redis-api-analytics
+    depends_on:
+        - datamicroservice
+        - redis-api-analytics
+    build:
+      context: .
+      dockerfile: AnalyticsMicroservice/Dockerfile
+
+  emqx:
+    image: 'emqx/emqx:latest'
+
+  kuiper:
+    image: 'emqx/kuiper:1.2.0-alpine'
+    environment:
+      MQTT_SOURCE__DEFAULT__SERVERS: "[tcp://emqx:1883]"
+    depends_on:
+        - datamicroservice
+        - emqx
+
+

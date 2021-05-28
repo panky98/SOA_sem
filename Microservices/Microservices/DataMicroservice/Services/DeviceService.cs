@@ -1,8 +1,13 @@
-﻿using ServiceStack.Redis;
+﻿using MQTTnet;
+using MQTTnet.Extensions.ManagedClient;
+using ServiceStack.Redis;
 using StableConditionsSensorMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DataMicroservice.Services
@@ -10,6 +15,12 @@ namespace DataMicroservice.Services
     public class DeviceService
     {
         readonly RedisClient redis = new RedisClient("redis-api",6379);
+        readonly MQTTClient mqttClient;
+
+        public DeviceService(MQTTClient kli)
+        {
+            this.mqttClient = kli;
+        }
         public IList<Entry> GetEntries(string sensorStandardMac)
         {
             long numberOfInputs = long.Parse(redis.GetValueFromHash("devices", sensorStandardMac));
@@ -80,7 +91,7 @@ namespace DataMicroservice.Services
             }
             return entries;
         }
-        public void addRow(Entry deviceData)
+        public async Task addRow(Entry deviceData)
         {
             string standardMac = deviceData.Sensor.Replace(':', '-');
             redis.IncrementValueInHash("devices", standardMac, 1);
@@ -95,6 +106,18 @@ namespace DataMicroservice.Services
             redis.SetEntryInHash(standardMac + ":" + deviceInputNumber, "Sensor", deviceData.Sensor.ToString());
             redis.SetEntryInHash(standardMac + ":" + deviceInputNumber, "Smoke", deviceData.Smoke.ToString());
             redis.SetEntryInHash(standardMac + ":" + deviceInputNumber, "Temp", deviceData.Temp.ToString());
+
+
+            //send to AnalyticsService data
+            var sendingItem = new StringContent(JsonSerializer.Serialize(deviceData), Encoding.UTF8, "application/json");
+
+            await this.mqttClient.ConnectAsync();
+            this.mqttClient.client.PublishAsync(new MqttApplicationMessageBuilder()
+                .WithTopic("devices/" + standardMac + "/messages")
+                .WithPayload(JsonSerializer.Serialize(deviceData))
+                .WithQualityOfServiceLevel(1)
+                .WithRetainFlag(true)
+                .Build());
         }
     }
 }

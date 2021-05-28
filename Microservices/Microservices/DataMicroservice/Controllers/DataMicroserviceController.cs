@@ -28,7 +28,7 @@ namespace DataMicroservice.Controllers
         [Route("addRow")]
         public async Task<IActionResult> addRow([FromBody] Entry deviceData)
         {
-            deviceService.addRow(deviceData);
+            await deviceService.addRow(deviceData);
             return Ok();
         }
         [HttpGet]
