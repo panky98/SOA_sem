@@ -51,34 +51,6 @@ namespace AnalyticsMicroservice.Services
 
             await client.ConnectAsync(options);
                 Console.WriteLine("STARTED " + client.IsConnected);
-
-            //string clientId = Guid.NewGuid().ToString();
-            //string mqttURI = "emqx";
-            //int mqttPort = 1883;
-            //bool mqttSecure = false;
-
-            //var messageBuilder = new MqttClientOptionsBuilder()
-            //    .WithClientId(clientId)
-            //    .WithTcpServer(mqttURI, mqttPort)
-            //    .WithCleanSession();
-
-            //var options = mqttSecure
-            //  ? messageBuilder
-            //    .WithTls()
-            //    .Build()
-            //  : messageBuilder
-            //    .Build();
-
-            //var managedOptions = new ManagedMqttClientOptionsBuilder()
-            //  .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
-            //  .WithClientOptions(options)
-            //  .Build();
-
-            //client = new MqttFactory().CreateMqttClient();
-
-
-            //await client.StartAsync(managedOptions);
-            //Console.WriteLine("IsConnected: " + client.IsConnected);
         }
     }
 }

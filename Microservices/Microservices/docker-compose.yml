@@ -51,27 +51,21 @@ services:
     depends_on:
         - emqx
 
-  redis-api-analytics:
-    image: redis:latest
-    depends_on:
-        - emqx
 
-  analyticsmicroservice:
-    image: ${DOCKER_REGISTRY-}analyticsmicroservice
+  commandmicroservice:
+    image: ${DOCKER_REGISTRY-}commandmicroservice
     ports:
         - 52806:80
     links:
         - datamicroservice
-        - redis-api-analytics
     depends_on:
         - emqx
         - datamicroservice
-        - redis-api-analytics
         - stableconditionssensorms
         - hightempandhumiditysensorms
     build:
       context: .
-      dockerfile: AnalyticsMicroservice/Dockerfile
+      dockerfile: CommandMicroservice/Dockerfile
 
   emqx:
     image: 'emqx/emqx:latest'
