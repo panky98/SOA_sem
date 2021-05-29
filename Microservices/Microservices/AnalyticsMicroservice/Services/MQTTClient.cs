@@ -39,7 +39,17 @@ namespace AnalyticsMicroservice.Services
 
                 });
 
-                await client.ConnectAsync(options);
+                client.UseConnectedHandler(async (a) =>
+                {
+                    Console.WriteLine("### CONNECTED WITH SERVER ###");
+
+                    // Subscribe to a topic
+                    await client.SubscribeAsync(new TopicFilterBuilder().WithTopic("HigherTemp").Build());
+
+                    Console.WriteLine("### SUBSCRIBED ###");
+                });
+
+            await client.ConnectAsync(options);
                 Console.WriteLine("STARTED " + client.IsConnected);
 
             //string clientId = Guid.NewGuid().ToString();
