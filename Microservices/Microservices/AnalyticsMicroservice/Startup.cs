@@ -1,3 +1,4 @@
+using AnalyticsMicroservice.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,8 @@ namespace AnalyticsMicroservice
         {
 
             services.AddControllers();
+            services.AddSingleton<MQTTClient>();
+            services.AddHostedService<HigherTempService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AnalyticsMicroservice", Version = "v1" });

@@ -10,7 +10,9 @@ services:
         - 51800
         - 80
     depends_on:
+        - emqx
         - redis-api
+        - kuiper
     links:
         - redis-api 
     build:
@@ -46,9 +48,13 @@ services:
 
   redis-api:
     image: redis:latest
+    depends_on:
+        - emqx
 
   redis-api-analytics:
     image: redis:latest
+    depends_on:
+        - emqx
 
   analyticsmicroservice:
     image: ${DOCKER_REGISTRY-}analyticsmicroservice
@@ -58,21 +64,33 @@ services:
         - datamicroservice
         - redis-api-analytics
     depends_on:
+        - emqx
         - datamicroservice
         - redis-api-analytics
+        - stableconditionssensorms
+        - hightempandhumiditysensorms
     build:
       context: .
       dockerfile: AnalyticsMicroservice/Dockerfile
 
   emqx:
     image: 'emqx/emqx:latest'
+    ports:
+        - 1883:1883
+        - 8081:8081
+    healthcheck:
+      test: ["CMD", "/opt/emqx/bin/emqx_ctl", "status"]
+      interval: 5s
+      timeout: 25s
+      retries: 5
 
   kuiper:
     image: 'emqx/kuiper:1.2.0-alpine'
+    ports:
+        - 9081:9081
     environment:
       MQTT_SOURCE__DEFAULT__SERVERS: "[tcp://emqx:1883]"
     depends_on:
-        - datamicroservice
-        - emqx
-
+        emqx:
+            condition: service_healthy
 

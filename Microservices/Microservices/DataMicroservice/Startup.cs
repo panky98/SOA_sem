@@ -34,6 +34,8 @@ namespace DataMicroservice
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DataMicroservice", Version = "v1" });
             });
+
+            services.AddHttpClient();
             services.AddScoped<DeviceService>();
             services.AddSingleton<MQTTClient>();
             services.AddMvc().AddJsonOptions(options =>
