@@ -98,5 +98,41 @@ namespace HighTempAndHumiditySensorMS.Controllers
             }
         }
 
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("AirCondition")]
+        public IActionResult AirCondition()
+        {
+            Console.WriteLine("AirCondition activated");
+            return Ok();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("Humidifier")]
+        public IActionResult Humidifier()
+        {
+            Console.WriteLine("Humidifier activated");
+            return Ok();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("Dehumidifier")]
+        public IActionResult Dehumidifier()
+        {
+            Console.WriteLine("Dehumidifier activated");
+            return Ok();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("Alarm")]
+        public IActionResult Alarm()
+        {
+            Console.WriteLine("Alarm activated");
+            return Ok();
+        }
+
     }
 }

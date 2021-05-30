@@ -62,7 +62,19 @@ namespace DataMicroservice.Services
                 var sendingItem = new StringContent(JsonSerializer.Serialize(obj), Encoding.UTF8, "application/json");
                 await this.httpClient.PostAsync("http://kuiper:9081/streams", sendingItem);
 
-                sendingItem=new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"HigherTemp\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
+                sendingItem=new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Temp > 27;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"HighTemp\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
+                await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
+
+                sendingItem = new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Temp < 10;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"LowTemp\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
+                await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
+
+                sendingItem = new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Humidity < 30;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"LowHumidity\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
+                await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
+
+                sendingItem = new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Humidity > 50;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"HighHumidity\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
+                await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
+
+                sendingItem = new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Motion=true;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"Motion\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
                 await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
             }
         }

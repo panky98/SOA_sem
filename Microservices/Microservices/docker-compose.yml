@@ -24,6 +24,8 @@ services:
     container_name: hightempandhumiditysensorms
     ports:
         - 52804:80
+    expose:
+        - 80
     links:
         - datamicroservice
     depends_on:
@@ -38,6 +40,8 @@ services:
     container_name: stableconditionssensorms
     ports:
         - 52805:80
+    expose:
+        - 80
     links:
         - datamicroservice
     depends_on:
@@ -56,6 +60,8 @@ services:
     image: ${DOCKER_REGISTRY-}commandmicroservice
     ports:
         - 52806:80
+    expose:
+        - 80
     links:
         - datamicroservice
     depends_on:
