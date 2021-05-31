@@ -78,12 +78,12 @@ namespace AnalyticsMicroservice.Services
                         else
                             this.httpClient.PostAsync("http://stableconditionssensorms:80/Control/Humidifier", sendingItem);
                     }
-                    if (args.ApplicationMessage.Topic.Equals("LowHumidity"))
+                    if (args.ApplicationMessage.Topic.Equals("Movement"))
                     {
                         if (hightemp)
                             this.httpClient.PostAsync("http://hightempandhumiditysensorms:80/Control/Alarm", sendingItem);
                         else
-                            this.httpClient.PostAsync("http://stableconditionssensorms:80/Control/Humidifier", sendingItem);
+                            this.httpClient.PostAsync("http://stableconditionssensorms:80/Control/Alarm", sendingItem);
                     }
 
                     Console.WriteLine("RECEIVED MESSAGE: " + Encoding.UTF8.GetString(args.ApplicationMessage.Payload) + "From topic: "+args.ApplicationMessage.Topic);

@@ -65,16 +65,16 @@ namespace DataMicroservice.Services
                 sendingItem=new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Temp > 27;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"HighTemp\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
                 await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
 
-                sendingItem = new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Temp < 10;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"LowTemp\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
+                sendingItem = new StringContent("{ \"id\": \"low_temp\",\"sql\": \"SELECT * FROM demo WHERE Temp < 10;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"LowTemp\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
                 await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
 
-                sendingItem = new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Humidity < 30;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"LowHumidity\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
+                sendingItem = new StringContent("{ \"id\": \"low_humidity\",\"sql\": \"SELECT * FROM demo WHERE Humidity < 30;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"LowHumidity\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
                 await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
 
-                sendingItem = new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Humidity > 50;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"HighHumidity\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
+                sendingItem = new StringContent("{ \"id\": \"high_humidity\",\"sql\": \"SELECT * FROM demo WHERE Humidity > 50;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"HighHumidity\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
                 await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
 
-                sendingItem = new StringContent("{ \"id\": \"higher_temp\",\"sql\": \"SELECT * FROM demo WHERE Motion=true;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"Motion\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
+                sendingItem = new StringContent("{ \"id\": \"movement\",\"sql\": \"SELECT * FROM demo WHERE Motion=true;\",\"actions\": [{\"mqtt\": {\"server\": \"tcp://emqx:1883\",\"topic\": \"Movement\"}}, {\"log\":{ }} ] }", Encoding.UTF8, "application/json");
                 await this.httpClient.PostAsync("http://kuiper:9081/rules", sendingItem);
             }
         }
