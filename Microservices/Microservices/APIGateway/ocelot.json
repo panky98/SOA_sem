@@ -1,0 +1,43 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/DataMicroservice/getAllSensorData/{sensorStandardMac}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "datamicroservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/getAllSensorData/{sensorStandardMac}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/DataMicroservice/getRangeSensorData/{sensorStandardMac}/{attributeName}/{lowerBound}/{upperBound}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "datamicroservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/getRangeSensorData/{sensorStandardMac}/{attributeName}/{lowerBound}/{upperBound}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/DataMicroservice/addRow",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "datamicroservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/addRow",
+      "UpstreamHttpMethod": [ "Post" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:52807"
+  }
+}

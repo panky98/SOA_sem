@@ -94,3 +94,18 @@ services:
         emqx:
             condition: service_healthy
 
+
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    ports:
+        - 52807:80
+    expose:
+        - 80
+    depends_on:
+        - datamicroservice
+        - stableconditionssensorms
+        - hightempandhumiditysensorms
+    build:
+      context: .
+      dockerfile: APIGateway/Dockerfile
+
