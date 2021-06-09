@@ -109,3 +109,18 @@ services:
       context: .
       dockerfile: APIGateway/Dockerfile
 
+  dashboard:
+    image: ${DOCKER_REGISTRY-}dashboard
+    ports:
+        - 52808:80
+    expose:
+        - 80
+    depends_on:
+        - datamicroservice
+        - stableconditionssensorms
+        - hightempandhumiditysensorms
+        - apigateway
+    build:
+      context: .
+      dockerfile: Dashboard/Dockerfile
+

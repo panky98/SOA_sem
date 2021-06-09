@@ -1,0 +1,36 @@
+﻿@page
+@using TreciCas.Pages
+@model IndexModel
+
+@{
+
+}
+<a href="./Vrtovi">Vrtovi</a>
+<h1>Ovo je stranica.</h1>
+<table>
+    <tr>
+        <th>Co</th>
+        <th>Humidity</th>
+        <th>Light</th>
+        <th>Lpg</th>
+        <th>Motion</th>
+        <th>MS</th>
+        <th>Sensor</th>
+        <th>Smoke</th>
+        <th>Temp</th>
+    </tr>
+    @foreach (var e in Model.entries)
+    {
+    <tr>
+        <td>@e.Co</td>
+        <td>@e.Humidity</td>
+        <td>@e.Light</td>
+        <td>@e.Lpg</td>
+        <td>@e.Motion</td>
+        <td>@e.MS</td>
+        <td>@e.Sensor</td>
+        <td>@e.Smoke</td>
+        <td>@e.Temp</td>
+    </tr>
+    }
+</table>
