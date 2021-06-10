@@ -7,6 +7,8 @@ WORKDIR /app
 # copy the json file first
 COPY ./dashboard/package.json /app
 
+RUN npm install
+
 # copy other project files
 COPY ./dashboard/ /app
 

@@ -7,7 +7,7 @@ services:
     ports:
         - 53800:80
     expose:
-        - 51800
+        - 53800
         - 80
     depends_on:
         - emqx
@@ -123,6 +123,3 @@ services:
     command: npm start
     ports:
       - 3000:3000
-    volumes:
-      - "./dashboard:/app"
-      - "/app/node_modules/"

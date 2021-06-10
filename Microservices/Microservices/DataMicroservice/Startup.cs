@@ -44,6 +44,16 @@ namespace DataMicroservice
                 options.JsonSerializerOptions.WriteIndented = true;
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             }).AddXmlSerializerFormatters();
+
+            services.AddCors(options => {
+                options.AddPolicy("Corse", builder => {
+                    builder.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("http://localhost:3000", "http://hightempandhumiditysensorms:80", "http://stableconditionssensorms:80", "http://commandmicroservice:80"
+                    , "http://apigateway:80", "http://dashboard:80")
+                    .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +68,7 @@ namespace DataMicroservice
 
 
             app.UseRouting();
-
+            app.UseCors("Corse");
             app.UseAuthorization();
 
 
