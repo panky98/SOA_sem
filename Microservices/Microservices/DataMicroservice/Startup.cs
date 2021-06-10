@@ -38,6 +38,7 @@ namespace DataMicroservice
             services.AddHttpClient();
             services.AddScoped<DeviceService>();
             services.AddSingleton<MQTTClient>();
+            services.AddSignalR();
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.WriteIndented = true;
@@ -64,6 +65,7 @@ namespace DataMicroservice
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<EventHub>("/eventhub");
             });
         }
     }
