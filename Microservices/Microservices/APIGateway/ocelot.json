@@ -35,6 +35,30 @@
       ],
       "UpstreamPathTemplate": "/api/addRow",
       "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/Command/getEventsFromSensor/{sensorStandardMac}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "commandmicroservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/getEventsFromSensor/{sensorStandardMac}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/Command/getAllGeneratedEvents",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "commandmicroservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/getAllGeneratedEvents",
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ],
   "GlobalConfiguration": {

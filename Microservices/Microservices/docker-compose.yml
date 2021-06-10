@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}datamicroservice
     container_name: datamicroservice
     ports:
-        - 52800:80
+        - 53800:80
     expose:
         - 51800
         - 80
@@ -23,7 +23,7 @@ services:
     image: ${DOCKER_REGISTRY-}hightempandhumiditysensorms
     container_name: hightempandhumiditysensorms
     ports:
-        - 52804:80
+        - 53804:80
     expose:
         - 80
     links:
@@ -39,7 +39,7 @@ services:
     image: ${DOCKER_REGISTRY-}stableconditionssensorms
     container_name: stableconditionssensorms
     ports:
-        - 52805:80
+        - 53805:80
     expose:
         - 80
     links:
@@ -55,11 +55,16 @@ services:
     depends_on:
         - emqx
 
+  redis-api-events:
+    image: redis:latest
+    depends_on:
+        - commandmicroservice
+
 
   commandmicroservice:
     image: ${DOCKER_REGISTRY-}commandmicroservice
     ports:
-        - 52806:80
+        - 53806:80
     expose:
         - 80
     links:
@@ -98,7 +103,7 @@ services:
   apigateway:
     image: ${DOCKER_REGISTRY-}apigateway
     ports:
-        - 52807:80
+        - 53807:80
     expose:
         - 80
     depends_on:
