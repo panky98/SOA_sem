@@ -20,12 +20,15 @@ namespace DataMicroservice.Services
         {
             var identity = (ClaimsIdentity)Context.User.Identity;
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            Console.WriteLine(Context.ConnectionId + " entered group " + groupName);
         }
 
         public async Task RemoveFromGroup(string groupName)
         {
             var identity = (ClaimsIdentity)Context.User.Identity;
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+            Console.WriteLine(Context.ConnectionId + " left group " + groupName);
+
         }
     }
 }
