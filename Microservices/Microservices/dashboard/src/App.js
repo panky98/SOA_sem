@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
-        .withUrl('http://localhost:53800/eventhub',{})
+        .withUrl('http://localhost:52800/eventhub',{})
         .withAutomaticReconnect()
         .build();
 
