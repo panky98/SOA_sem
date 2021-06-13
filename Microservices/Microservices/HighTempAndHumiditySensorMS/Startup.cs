@@ -40,6 +40,15 @@ namespace HighTempAndHumiditySensorMS
             //after that it can be used in Controller with DI
             services.AddSingleton<SensorService>();
             services.AddHostedService<SensorService>(provider=>provider.GetService<SensorService>());
+            services.AddCors(options => {
+                options.AddPolicy("Corse", builder => {
+                    builder.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("http://localhost:3000", "http://hightempandhumiditysensorms:80", "http://stableconditionssensorms:80", "http://commandmicroservice:80"
+                    , "http://apigateway:80", "http://dashboard:80")
+                    .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +63,7 @@ namespace HighTempAndHumiditySensorMS
 
 
             app.UseRouting();
-
+            app.UseCors("Corse");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
