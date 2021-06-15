@@ -12,14 +12,11 @@ export default function useFetch(url) {
       try {
         const response = await fetch(baseUrl + url,{
           method:"GET",
-          headers:{"Content-Type":"application/json","Authorization":"Bearer "+localStorage.getItem("loginToken")}
         });
         if (response.ok) {
           const json = await response.json();
           setData(json);
         }else if(response.status==401){
-          localStorage.removeItem("loginToken");
-          window.location.replace("/LogIn");
         } 
         else {
           throw response;
