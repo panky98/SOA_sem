@@ -64,7 +64,7 @@ namespace AnalyticsMicroservice.Services
                     {
                         redis.AddItemToList(sensor,DateTime.Now.ToString()+ " HighTemp");
                         redis.AddItemToList("AllEvents", sensor + " " + DateTime.Now.ToString() +" " +  "HigherTemp");
-                        await connection.InvokeAsync("SendMessage", "EventGroup", args.ApplicationMessage.ConvertPayloadToString() + " " + DateTime.Now.ToString() + " " + "HigherTemp");
+                        await connection.InvokeAsync("SendMessage", "EventGroup", sensor + " " + DateTime.Now.ToString() + " " + "HigherTemp");
 
                         if (hightemp)
                             this.httpClient.PostAsync("http://hightempandhumiditysensorms:80/Control/AirCondition", sendingItem);
@@ -75,7 +75,7 @@ namespace AnalyticsMicroservice.Services
                     {
                         redis.AddItemToList(sensor, DateTime.Now.ToString() + " LowTemp");
                         redis.AddItemToList("AllEvents", sensor + " " + DateTime.Now.ToString() + " LowTemp");
-                        await connection.InvokeAsync("SendMessage", "EventGroup", args.ApplicationMessage.ConvertPayloadToString() + " " + DateTime.Now.ToString() + " " + "LowTemp");
+                        await connection.InvokeAsync("SendMessage", "EventGroup", sensor + " " + DateTime.Now.ToString() + " " + "LowTemp");
 
                         if (hightemp)
                             this.httpClient.PostAsync("http://hightempandhumiditysensorms:80/Control/CentralHeating", sendingItem);
@@ -86,7 +86,7 @@ namespace AnalyticsMicroservice.Services
                     {
                         redis.AddItemToList(sensor, DateTime.Now.ToString() + " HighHumidity");
                         redis.AddItemToList("AllEvents", sensor + " " + DateTime.Now.ToString() + " HighHumidity");
-                        await connection.InvokeAsync("SendMessage", "EventGroup", args.ApplicationMessage.ConvertPayloadToString() + " " + DateTime.Now.ToString() + " " + "HighHumidity");
+                        await connection.InvokeAsync("SendMessage", "EventGroup", sensor + " " + DateTime.Now.ToString() + " " + "HighHumidity");
 
 
                         if (hightemp)
@@ -98,7 +98,7 @@ namespace AnalyticsMicroservice.Services
                     {
                         redis.AddItemToList(sensor, DateTime.Now.ToString() + " LowHumidity");
                         redis.AddItemToList("AllEvents", sensor + " " + DateTime.Now.ToString() + " LowHumidity");
-                        await connection.InvokeAsync("SendMessage", "EventGroup", args.ApplicationMessage.ConvertPayloadToString() + " " + DateTime.Now.ToString() + " " + "LowHumidity");
+                        await connection.InvokeAsync("SendMessage", "EventGroup", sensor + " " + DateTime.Now.ToString() + " " + "LowHumidity");
 
 
                         if (hightemp)
@@ -110,7 +110,7 @@ namespace AnalyticsMicroservice.Services
                     {
                         redis.AddItemToList(sensor, DateTime.Now.ToString() + " Movement");
                         redis.AddItemToList("AllEvents", sensor + " " + DateTime.Now.ToString() + " Movement");
-                        await connection.InvokeAsync("SendMessage", "EventGroup", args.ApplicationMessage.ConvertPayloadToString() + " " + DateTime.Now.ToString() + " " + "Movement");
+                        await connection.InvokeAsync("SendMessage", "EventGroup", sensor + " " + DateTime.Now.ToString() + " " + "Movement");
 
 
                         if (hightemp)

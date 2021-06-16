@@ -9,6 +9,7 @@ import Error from "./Error";
 import NavBar from './NavBar';
 
 import Default from './Default';
+import Events from './Events';
 function App() {
   return(
   <Router>
@@ -18,7 +19,7 @@ function App() {
       <Default/>
     </Route>
     <Route exact path="/Events">
-      <Default/>
+      <Events/>
     </Route>
     <Route  path="*">
       <Error />
